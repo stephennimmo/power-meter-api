@@ -33,6 +33,6 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     testAssemblyVer2: |
-      **\*test*.dll
-      !**\*Tests.dll
+      **\*Tests.dll
+      !**\*TestAdapter.dll
       !**\obj\**
