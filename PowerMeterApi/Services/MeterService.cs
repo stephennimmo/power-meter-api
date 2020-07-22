@@ -23,7 +23,7 @@ namespace PowerMeterApi.Services
         }
 
         public Meter FindById(string meterId) {
-            return this.dbContext.Meters.Find(meterId);
+            return this.dbContext.Meters.FirstOrDefault(m => m.MeterId == meterId);
         }
 
     }

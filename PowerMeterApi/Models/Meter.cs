@@ -7,17 +7,6 @@ namespace PowerMeterApi.Models
     [Table("meter", Schema="dbo")]
     public class Meter
     {
-
-        public Meter()
-        {
-
-        }
-
-        public Meter(string meterId)
-        {
-            this.MeterId = meterId;
-        }
-
         [Key]
         [Column("meter_id")]
         public string MeterId { get; set; }
