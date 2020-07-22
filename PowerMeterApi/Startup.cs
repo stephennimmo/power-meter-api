@@ -23,7 +23,7 @@ namespace PowerMeterApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = "Server=localhost;Database=meter_db;User Id=sa;Password=Pass1234";
+            string connectionString = Configuration.GetConnectionString("MeterDbConnectionString");
             services.AddDbContext<MeterDbContext>(opts =>
                 opts.UseSqlServer(connectionString));
             services.AddScoped<IMeterService, MeterService>();
