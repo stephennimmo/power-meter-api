@@ -4,18 +4,12 @@ namespace PowerMeterApi.Models
 {
     public class MeterDbContext : DbContext
     {
-        public virtual DbSet<Meter> Meters { get; set; }
+        public MeterDbContext(DbContextOptions<MeterDbContext> options)
+            : base(options)
+        {
+        }
 
-        public MeterDbContext()
-        {
-        }
-        public MeterDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
-        {
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer("meter_db");
-        }
+        public virtual DbSet<Meter> Meters { get; set; }
+        
     }
 }
