@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using DbUp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,7 @@ namespace PowerMeterApi
 
             var dbUpgradeEngineBuilder = DeployChanges.To
                 .SqlDatabase(connectionString)
-                .WithScriptsFromFileSystem("Scripts")
+                .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
                 .WithTransaction()
                 .LogToConsole();
 

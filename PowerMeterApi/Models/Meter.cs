@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PowerMeterApi.Models
 {
-    [Table("meter", Schema="dbo")]
+    [Table("meter")]
     public class Meter
     {
         [Key]

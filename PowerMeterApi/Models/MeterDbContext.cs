@@ -4,6 +4,11 @@ namespace PowerMeterApi.Models
 {
     public class MeterDbContext : DbContext
     {
+
+        public MeterDbContext() 
+        {
+            
+        }
         public MeterDbContext(DbContextOptions<MeterDbContext> options)
             : base(options)
         {

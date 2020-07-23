@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Scripts\*.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="Scripts\*.sql" />
   </ItemGroup>
 
   <ItemGroup>

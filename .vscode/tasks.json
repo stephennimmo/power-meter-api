@@ -1,0 +1,68 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/PowerMeterApi.Tests/PowerMeterApi.Tests.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/PowerMeterApi.Tests/PowerMeterApi.Tests.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/PowerMeterApi.Tests/PowerMeterApi.Tests.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "wait10",
+            "type": "shell",
+            "command": "sleep",
+            "args": [
+                "10"
+            ]
+        },
+        {
+            "label": "docker-compose-up",
+            "command": "docker-compose -f docker-compose.yml up -d --build",
+            "type": "shell"
+        },
+        {
+            "label": "docker-compose-down",
+            "command": "docker-compose -f docker-compose.yml down",
+            "type": "shell"
+        },
+        {
+            "label": "build_compose",
+            "dependsOn": [
+                "build",
+                "docker-compose-up",
+                "wait10"
+            ]
+        }
+    ]
+}
