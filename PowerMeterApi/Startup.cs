@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using PowerMeterApi.Models;
 using PowerMeterApi.Services;
 
@@ -14,6 +15,9 @@ namespace PowerMeterApi
 {
     public class Startup
     {
+
+        private ILogger _logger;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,11 +29,10 @@ namespace PowerMeterApi
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("MeterDbConnectionString");
-            services.AddDbContext<MeterDbContext>(opts =>
-                opts.UseSqlServer(connectionString));
+            this.DbUp(connectionString);
+            services.AddDbContext<MeterDbContext>(opts => opts.UseSqlServer(connectionString));
             services.AddScoped<IMeterService, MeterService>();
             services.AddControllers();
-            this.DbUp(connectionString);
         }
 
         public void DbUp(string connectionString)
@@ -47,23 +50,24 @@ namespace PowerMeterApi
             {
                 Console.WriteLine("Upgrades have been detected. Upgrading database now...");
                 var operation = dbUpgradeEngine.PerformUpgrade();
-                if (operation.Successful)
+                if (!operation.Successful)
                 {
-                    Console.WriteLine("Upgrade completed successfully");
+                    Console.WriteLine("Error happened in the upgrade. Please check the logs...");
+                    throw new DbUpdateException(operation.Error.Message);
                 }
-
-                Console.WriteLine("Error happened in the upgrade. Please check the logs");
+                Console.WriteLine("Upgrade completed successfully");
             }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            _logger = logger;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
