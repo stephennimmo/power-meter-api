@@ -26,11 +26,7 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-    testAssemblyVer2: |
-      **\*Tests.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
+    command: 'test'
+    projects: '**/*.csproj'
